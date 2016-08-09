@@ -1,6 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import renderModal from '../Detail'
+import SpeciesTable from './components/Species'
 
 window.$ = window.jQuery = $
 require('bootstrap')
@@ -121,6 +122,12 @@ function findPokemonMapById (id) {
 
 const Table = React.createClass({
 
+    getInitialState () {
+        return {
+            monsters: ipc.sendSync('get-players-pokemons')
+        }
+    },
+
   componentDidMount () {
     document.title = 'PokéNurse • Home'
 
@@ -189,18 +196,7 @@ const Table = React.createClass({
             </span>
           </h1>
 
-          <table className='table table-condensed table-hover display' id='pokemon-data'>
-            <thead>
-              <tr>
-                <th></th>
-                <th width='18%'>Pokédex #</th>
-                <th>Name</th>
-                <th>Count</th>
-                <th>Candy</th>
-                <th>Evolves</th>
-              </tr>
-            </thead>
-          </table>
+            <SpeciesTable monsters={this.state.monsters} />
         </div>
 
         <div
